@@ -6,19 +6,31 @@
 #include <stdlib.h>
 #include <string.h>
 using namespace std;
-
+// khai bao file vao, ra
 fstream fi("input.dat", ios::in | ios::binary);
-fstream fo("output.dat", ios::out | ios::binary );
-
-typedef struct {
+fstream fo("danhba.dat", ios::out | ios::binary );
+//
+struct CONTACT {
 	char name[30]; 
 	char phone[11]; 
 	char email[30]; 
 	char address[50]; 
 	char sex[5];
-} CONTACT;
+};
+vector <CONTACT> db;// Vector db kieu danh ba
+void readFileContact(); // Ham doc du lieu tu file
+void writeFileContact();    // Ham ghi du lieu vào file
+void showContact(); // Ham hien thi danh ba ra man hinh
+void addContact();  // Ham them danh ba tu ban phim
+void addContactDemo(); // Ham them danh ba demo
+void editByPhone(); // Ham chinh sua danh ba theo so dien thoai
+void deleteByPhone(); // Ham xoa danh ba theo so dien thoai
+void searchByName();  // Ham tim kiem danh ba theo ten
+bool returnToMenu(); // Ham kiem tra quay lai
+void showMenu(); // Ham hien thi menu
+void menuOption();  // Ham menu tuy chon
 
-vector <CONTACT> db;
+
 //Doc tu file
 void readFileContact(){
 	CONTACT c;
@@ -36,7 +48,7 @@ void readFileContact(){
 	db.pop_back();
 }
 
-//Write file .dat contact
+//Ghi file .dat
 void writeFileContact() {
 	for (int i = 0; i < db.size(); i++) {
 		fo.write(db[i].name, sizeof(db[i].name));
@@ -48,36 +60,36 @@ void writeFileContact() {
 	fo.close(); 
 }
 
-//Show file .dat contact
+// Hien thi danh ba
 void showFileContact() {
 	for (int i = 0; i < db.size(); i++) {
 		cout << "----------------" << endl;
-		cout << db[i].name << endl;
-		cout << db[i].sex << endl;
-		cout << db[i].phone << endl;
-		cout << db[i].email << endl;
-		cout << db[i].address << endl;
+		cout << "Name : " << db[i].name << endl;
+		cout << "Sex: " << db[i].sex << endl;
+		cout << "Phone number : " << db[i].phone << endl;
+		cout << "Email : " << db[i].email << endl;
+		cout << "Address : " << db[i].address << endl;
 	}
 }
 
-// them danh ba bang tay
+// them danh ba tu ban phim
 void addContact() {
 	CONTACT addNew;
-	cout << "Nhap ten: ";
+	cout << "Name : ";
 	cin >> addNew.name;
-	cout << "Nhap gioi tinh: ";
+	cout << "Sex: ";
 	cin >> addNew.sex;
-	cout << "Nhap so dien thoai: ";
+	cout << "Phone number : ";
 	cin >> addNew.phone;
-	cout << "Nhap email: ";
+	cout << "Email : ";
 	cin >> addNew.email;
-	cout << "Nhap dia chi: ";
+	cout << "Address : ";
 	cin >> addNew.address;
 	
 	db.push_back(addNew);
 }
-// them danh ba cung'
-void addContactH() { 
+// them danh ba demo
+void addContactDemo() { 
 	CONTACT c1;
 	strcpy(c1.name, "Son");
 	strcpy(c1.sex, "Nam");
@@ -106,7 +118,7 @@ void addContactH() {
 void editByPhone() {
 	CONTACT cEdit;
 	
-	int item;
+	int vt;
 	char ePhone[11];
 	
 	cout << "Enter the phone number to fix: ";
@@ -114,8 +126,8 @@ void editByPhone() {
 	
 	for (int i = 0; i < db.size(); i++) {
 		if (strcmp(ePhone, db[i].phone) == 0) {
-			item = i;
-			db.erase(db.begin() + item);
+			vt = i;
+			db.erase(db.begin() + vt);
 			cout << "New name: ";
 			cin >> cEdit.name;
 			cout << "New sex: ";
@@ -126,41 +138,41 @@ void editByPhone() {
 			cin >> cEdit.email;
 			cout << "New address: ";
 			cin >> cEdit.address;
-			db.insert(db.begin() + item , cEdit);
+			db.insert(db.begin() + vt , cEdit);
 		}
 	}
 }
 // xoa danh ba theo sdt
-void deleteByPhone() {
-	int item;
-	char dePhone[11];
+void deleteByPhone(){
+	int vt;
+	char delPhone[11];
 	
 	cout << "Enter the phone to delete: ";
-	cin >> dePhone;
+	cin >> delPhone;
 	
 	for (int i = 0; i < db.size(); i++) {
-		if (strcmp(dePhone, db[i].phone) == 0) {
-			item = i;
-			db.erase(db.begin() + item);		
+		if (strcmp(delPhone, db[i].phone) == 0) {
+			vt = i;
+			db.erase(db.begin() + vt);		
 		}
 	}
 }
 // tim kiem danh ba theo ten
 void searchByName() {
-	int item;
-	char sName[20];	
+	int vt;
+	char sName[30];	
 	cout << "Enter name: ";
 	cin >> sName;
 	
 	for (int i = 0; i < db.size(); i++) {
 		if(strcmp(sName, db[i].name) == 0){
-			item = i;
+			vt = i;
 			cout << "----------------" << endl;
-			cout << db[item].name << endl;
-			cout << db[item].sex << endl;
-			cout << db[item].phone << endl;
-			cout << db[item].email << endl;
-			cout << db[item].address << endl;
+			cout << "Name : " << db[vt].name << endl;
+			cout << "Sex: " << db[vt].sex << endl;
+			cout << "Phone number : " << db[vt].phone << endl;
+			cout << "Email : " << db[vt].email << endl;
+			cout << "Address : " << db[vt].address << endl;
 		}
 		
 	}
@@ -183,9 +195,9 @@ void showMenu() {
 	cout << "3. Edit contact" << endl;
 	cout << "4. Delete contact" << endl;
 	cout << "5. Find contact" << endl;
-	cout << "6. Exit contact" << endl;
+	cout << "6. Exit" << endl;
 }
-// chon nemu
+// menu tuy chon
 void menuOption() {
 	int mo;
 	cout << "Enter your choice:> ";
@@ -195,7 +207,6 @@ void menuOption() {
 		case 1:
 			system("cls");
 			addContact();
-			writeFileContact();
 			cout << "Add contact successfully!" << endl;
 			
 			if(returnToMenu()) {
@@ -266,14 +277,13 @@ void menuOption() {
             showMenu();
             cout << "Wrong option!" << endl;
             menuOption();
+            break;
 	}
 }
 
 int main() {
-	vector <CONTACT> db;
-//	readFileContact();
-//	addContact();
-	addContactH();
+	//readFileContact();
+	addContactDemo();
 	showMenu();
 	menuOption();
 	writeFileContact();

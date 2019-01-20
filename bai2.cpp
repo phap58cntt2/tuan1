@@ -10,6 +10,19 @@ struct NGAYTHANG
     int thang;
     int nam;
 };
+bool ktnhuan(NGAYTHANG N);
+void Nhap( NGAYTHANG &N);
+void ngaytrongnam(NGAYTHANG N);
+void CongThem(NGAYTHANG &N);
+void TruRa(NGAYTHANG &N);
+
+// kiem tra nam nhuan
+bool ktnhuan(NGAYTHANG N){
+    if( ( ( N.nam%100 != 00) && ( N.nam%4 == 0) ) || ( N.nam%400==0 ))
+        return true;
+    else
+        return false;
+}
 // Nhap ngay thang
 void Nhap( NGAYTHANG &N){
 	char c;
@@ -17,14 +30,7 @@ void Nhap( NGAYTHANG &N){
 		cout<<"Nhap ngay thang dung dinh dang: ";
 		cin>>N.ngay>>c>>N.thang>>c>>N.nam;
 	}
-	while((N.ngay>31 || N.thang>12)||(N.thang==2 && N.ngay>29));
-}
-// kiem tra nam nhuan
-bool ktnhuan(NGAYTHANG N){
-    if( ( ( N.nam%100 != 00) && ( N.nam%4 == 0) ) || ( N.nam%400==0 ))
-        return true;
-    else
-        return false;
+	while((N.ngay>31 || N.thang>12)||(N.thang==2 && N.ngay>29)|| (ktnhuan(N)==false && N.ngay>28) && N.thang==2);
 }
 // so thu tu ngay tring nam
 void ngaytrongnam(NGAYTHANG N)
@@ -58,7 +64,8 @@ void CongThem(NGAYTHANG &N){
 	cout<<"Nhap so nguyen duong: ";
 	cin >> n;
 	while(n != 0){
-		if((N.ngay<31 &&(N.thang==1 || N.thang==3 || N.thang==5 || N.thang==7 || N.thang==8 || N.thang==10 || N.thang==12)) || (N.ngay < 30 && (N.thang==4 || N.thang==6||N.thang == 9))|| (N.ngay<29 && ktnhuan(N))|| (N.ngay<28 && ktnhuan(N)==false) )
+		if((N.ngay<31 &&(N.thang==1 || N.thang==3 || N.thang==5 || N.thang==7 || N.thang==8 || N.thang==10 || N.thang==12)) 
+			|| (N.ngay < 30 && (N.thang==4 || N.thang==6||N.thang == 9))|| (N.ngay<29 && ktnhuan(N))|| (N.ngay<28 && ktnhuan(N)==false))
 			N.ngay++;
 		else{
 			if(N.thang < 12){
@@ -70,7 +77,8 @@ void CongThem(NGAYTHANG &N){
 				N.thang = 1;
 				N.ngay = 1;
 			}
-}	n--;
+		}					
+		n--;
 	}
 }
 // tru ra ngay
@@ -120,7 +128,7 @@ int main(){
 		cout<<"Nam khong nhuan!";
 	ngaytrongnam(N);
 	CongThem(N);
-	cout<<"Ngay: "<<N.ngay<<"/"<<N.thang<<"/"<<N.nam<<endl;
+	cout<<"Ngay sau khi cong : "<<N.ngay<<"/"<<N.thang<<"/"<<N.nam<<endl;
 	TruRa(N);
-	cout<<"Ngay: "<<N.ngay<<"/"<<N.thang<<"/"<<N.nam;
+	cout<<"Ngay sau khi tru : "<<N.ngay<<"/"<<N.thang<<"/"<<N.nam;
 }

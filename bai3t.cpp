@@ -5,7 +5,7 @@
 #include<vector>
 #include<string.h>
 using namespace std;
-struct BoDe{
+struct DE{
 	string cauhoi;
 	string A, B, C;
 	string DA;
@@ -14,10 +14,10 @@ struct Nguoichoi{
 	string ten;
 	int diem;
 };
-vector <BoDe> bd;
+vector <DE> bd;
 vector <Nguoichoi> NC;
 // Xuat 1 cau va tra loi
-int Xuat(BoDe bd){	
+int Xuat(DE bd){	
 	int diem=0;
 	string DapAn;
 	cout<<bd.cauhoi<<endl;
@@ -37,7 +37,7 @@ int Xuat(BoDe bd){
 	return diem;	
 }
 // nhap thong tin nguoi choi
-void Nhaptennguoichoi(int d){
+void NhapTT(int d){
 	Nguoichoi nc;
 	cout<<"Nhap ten nguoi choi:";
 	cin>>nc.ten;
@@ -54,7 +54,7 @@ void DocDe(){
 		case 1:{
 			ifstream f("de1.txt");
 			string s;
-			BoDe de1; 
+			DE de1; 
 			int SL;
 			getline(f,s);
 			SL=atoi(s.c_str());
@@ -70,7 +70,7 @@ void DocDe(){
 		}
 		case 2:{
 			ifstream f("de2.txt");
-			string s; BoDe de2; 
+			string s; DE de2; 
 			int SL;
 			getline(f,s);
 			SL=atoi(s.c_str());
@@ -112,14 +112,14 @@ void Xuatdiemten(){
 			}	
 		}
 		if(check!=1){
-			cout<<"Nhap sai ten!!"<<endl;
+			cout<<"Khong co nguoi choi nay!!"<<endl;
 			cout<<"-------------------"<<endl;
 		}
 		cout<<"Ban co muon xem diem nguoi khac khong?"<<endl;
 		cout<<"Y: Xem tiep"<<endl;
 		cout<<"N: Khong muon xem tiep!"<<endl;
 		cin>>ck;
-	} while (ck!="N");
+	} while (ck!="N" && ck!="n");
 }
 void Lambai(){
 	string check;
@@ -129,22 +129,14 @@ void Lambai(){
 		for(int i=0;i<bd.size();i++)
 			d+=Xuat(bd[i]);
 		cout<<"So diem dat duoc: "<<d<<endl;
-		Nhaptennguoichoi(d);
+		NhapTT(d);
 		system("cls");
 		cout<<"Ban co muon choi tiep khong?"<<endl;
 		cout<<"Y: Choi tiep"<<endl;
 		cout<<"N: Ngung choi"<<endl;
 		cin>>check;
 		bd.clear();
-	} while (check!="N");
-}
-void Xuatdiem(){
-	for(int i=0;i<NC.size();i++){
-		cout<<"Ten:";
-		cout<<NC[i].ten<<endl;
-		cout<<"Diem:";
-		cout<<NC[i].diem<<endl;
-	}
+	} while (check=="Y" || check=="y");
 }
 int main(){	
 	int n;

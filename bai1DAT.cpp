@@ -4,8 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 using namespace std;
-fstream fi("input.dat");
-fstream fo("danhba.dat");
+fstream fi("input.dat", ios::in | ios::binary);
+fstream fo("danhba.dat", ios::out | ios::binary );
 struct Contact{
 	char name[20];
 	char phone[11];
@@ -143,6 +143,7 @@ int main(){
 	themmoi(c2);
 	themmoi(c3);
 	writeFileContact();
+//	readFile();
 	cout<<"Danh sanh danh ba: "<<endl;
 	lietkeDB();
 	chinhsua();
