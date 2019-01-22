@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <conio.h>
 #include <iostream>
-#define MAXINT 1000000
+#define MAX 1000000
 #define max 100
 #define FileIn "dothi.txt"
 using namespace std;
 void Doc_File(int A[max][max], int &n, int &D, int &C) {
  FILE*f = fopen(FileIn,"rb");
- fscanf(f,"%d%d%d",&n,&D,&C);
+ fscanf(f,"%d",&n);
+ cout<<"Nhap diem dau : ";
+ cin>>D;
+ cout<<"Nhap diem cuoi : ";
+ cin>>C;
  cout<<"Ma Tran Lien Ket Tuong Ung.\n";
- cout<<D<<" "<<C<<endl;
  for(int i =0;i<n;i++) {
   for(int j =0;j<n;j++) {
    fscanf(f,"%d",&A[i][j]);
@@ -24,7 +27,7 @@ void Dijkstra(int A[max][max], int n, int D, int C) {
  char DanhDau[max];
  int Nhan[max], Truoc[max], XP, min;
  for(int i=0; i<n; i++){
-  Nhan[i] = MAXINT;
+  Nhan[i] = MAX;
   DanhDau[i] = 0;
   Truoc[i] = D;
  }
@@ -37,7 +40,7 @@ void Dijkstra(int A[max][max], int n, int D, int C) {
     Nhan[j] = A[XP][j]+Nhan[XP];
     Truoc[j] = XP;
    }
-   min = MAXINT;
+   min = MAX;
   for(int j = 0; j<n; j++)
   if(min>Nhan[j]&& DanhDau[j]==0){
    min = Nhan[j];
@@ -55,9 +58,6 @@ void Dijkstra(int A[max][max], int n, int D, int C) {
 }
 int  main() {
  int A[max][max],n,Dau,Cuoi;
-
-
-
  Doc_File(A,n,Dau,Cuoi);
  Dijkstra(A,n,Dau,Cuoi);
  getch();
